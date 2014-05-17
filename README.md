@@ -32,6 +32,7 @@
 
 # Sprint 1: Artist, Venue and Event
 
+- Version: 0.1.1
 - Start Date: 4/20/2014
 - Target Date: 5/15/2014
 - Actual Date: 5/16/2014
