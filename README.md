@@ -1,4 +1,4 @@
-# LiveJazz.me Application
+# LiveJazzNear.me Application
 
 > This web application is based on Play Framework and Akka using Scala language.
 
