@@ -57,11 +57,11 @@
 
 ## Product Features:
 - Create a site crawler to fetch Events (Artist, Venue, and Event) from configured sites.
-- Search web to find Artist and Venue official website
+- Crawl web to find Artist and Venue official website
 - Master Artist, Venue and Event to avoid duplicates, link Artist playing in different bands
 
 ## User Stories
-- Find a crawler utility
+- Find a crawler utility (used http://htmlcleaner.sourceforge.net/index.php)
 - Create unit test for crawling sample events
 - Save page to crawl from locally for development purpose
 - Use Agents with supervision to craw and insert Artist, Venue, and Event in database

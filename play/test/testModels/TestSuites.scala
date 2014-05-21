@@ -4,9 +4,11 @@
 package testModels;
 
 import org.scalatest.Suites
+import testActors.HtmlCleanerSpec
 
 class TestSuite extends Suites (
   new PartySpec,
   new EventSpec,
   new SourceSpec,
-  new WebsiteSpec)
+  new WebsiteSpec,
+  new HtmlCleanerSpec)
