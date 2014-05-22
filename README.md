@@ -63,7 +63,8 @@
 ## User Stories
 - Find a crawler utility (used http://htmlcleaner.sourceforge.net/index.php)
 - Create unit test for crawling sample events
-- Save page to crawl from locally for development purpose
+- Save page sample locally to crawl for development purpose
+- Added longitude and latitude to Party corresponding to address location.
 - Use Agents with supervision to craw and insert Artist, Venue, and Event in database
 - Use google search to find official website of Artist and Venue
 - Master Artist and Venue - find duplicates

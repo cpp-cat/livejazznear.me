@@ -26,6 +26,8 @@ CREATE TABLE PARTIES (
     --
     NAME VARCHAR(255) NOT NULL,                 -- Party's name
     STREET_ADDRESS VARCHAR(255),                -- Party's address, single string for now. . .
+    LOCATION_LAT REAL,                          -- Party's address latitude
+    LOCATION_LNG REAL,                          -- Party's address longitude
     PHONE_NBR VARCHAR(25),                      -- Party's phone nbr
     WEBSITE_URL VARCHAR(255)                    -- Official Party's website
 );
@@ -34,6 +36,7 @@ CREATE TABLE PARTIES (
 -- Index on Parties
 CREATE INDEX parties_key_idx ON PARTIES (ID, TYPE_ID);
 CREATE INDEX parties_status_idx ON PARTIES (TYPE_ID, STATUS);
+CREATE INDEX parties_location_idx ON PARTIES (LOCATION_LAT, LOCATION_LNG);
 
 
 -- EVENTS table definition

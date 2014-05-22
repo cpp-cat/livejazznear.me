@@ -12,6 +12,8 @@ CREATE TABLE PARTIES (
     TYPE_ID BIGINT NOT NULL,                    
     NAME VARCHAR(255) NOT NULL,                 
     STREET_ADDRESS VARCHAR(255),                
+    LOCATION_LAT REAL,
+    LOCATION_LNG REAL,
     PHONE_NBR VARCHAR(25),                      
     WEBSITE_URL VARCHAR(255)                    
 );
@@ -20,6 +22,7 @@ CREATE TABLE PARTIES (
 CREATE INDEX parties_key_idx ON PARTIES (ID, TYPE_ID);
 CREATE INDEX parties_status_idx ON PARTIES (TYPE_ID, STATUS);
 CREATE INDEX parties_name_idx ON PARTIES (NAME);
+CREATE INDEX parties_location_idx ON PARTIES (LOCATION_LAT, LOCATION_LNG);
 
 
 CREATE TABLE EVENTS (

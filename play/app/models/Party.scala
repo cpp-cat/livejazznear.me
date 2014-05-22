@@ -27,7 +27,7 @@ case class Artist(val id: Long, val status: Byte, val sourceId: Long, val name: 
  * Instances are created via the repository layer
  */
 case class Venue(val id: Long, val status: Byte, val sourceId: Long, val name: String,
-  val streetAddress: Option[String], val phoneNbr: Option[String],
+  val streetAddress: Option[String], val locationLat: Option[Float], val locationLng: Option[Float], val phoneNbr: Option[String],
   val websiteUrl: Option[String])
 
 // -----------------------------------------------------------------------------------------------------------
@@ -50,13 +50,14 @@ object Parties {
    * Get all Party by type id and status
    * @TODO Add pagination
    */
-  def getAll(typeId: Long, status: Byte = ACTIVE): List[(Long, Byte, Long, String, Option[String], Option[String], Option[String])] = DB.withConnection { implicit c =>
-    SQL("""SELECT a.ID, a.STATUS, a.SOURCE_ID, a.NAME, a.STREET_ADDRESS, a.PHONE_NBR, a.WEBSITE_URL
+  def getAll(typeId: Long, status: Byte = ACTIVE): List[(Long, Byte, Long, String, Option[String], Option[Float], Option[Float], Option[String], Option[String])] = DB.withConnection { implicit c =>
+    SQL("""SELECT a.ID, a.STATUS, a.SOURCE_ID, a.NAME, a.STREET_ADDRESS, a.LOCATION_LAT, a.LOCATION_LNG, a.PHONE_NBR, a.WEBSITE_URL
 		       FROM PARTIES a WHERE a.TYPE_ID = {typeId} AND a.STATUS = {status}
 		       ORDER BY a.NAME""")
       .on('typeId -> typeId, 'status -> status)
       .as(get[Long]("ID") ~ get[Byte]("STATUS") ~ get[Long]("SOURCE_ID") ~ get[String]("NAME")
-        ~ get[Option[String]]("STREET_ADDRESS") ~ get[Option[String]]("PHONE_NBR") ~ get[Option[String]]("WEBSITE_URL")
+        ~ get[Option[String]]("STREET_ADDRESS") ~ get[Option[Float]]("LOCATION_LAT") ~ get[Option[Float]]("LOCATION_LNG") ~ get[Option[String]]("PHONE_NBR")
+        ~ get[Option[String]]("WEBSITE_URL")
         map (flatten) *)
   }
 
@@ -96,7 +97,7 @@ object Parties {
     SQL("""SELECT a.ID, a.STATUS, a.SOURCE_ID, a.NAME, a.STREET_ADDRESS, a.PHONE_NBR, a.WEBSITE_URL
 		       FROM PARTIES a WHERE a.TYPE_ID = {typeId} AND a.NAME LIKE {name} AND a.STATUS = {status}
 		       ORDER BY a.NAME""")
-      .on('typeId -> typeId, 'name -> ('%'+name+'%'), 'status -> status)
+      .on('typeId -> typeId, 'name -> ('%' + name + '%'), 'status -> status)
       .as(get[Long]("ID") ~ get[Byte]("STATUS") ~ get[Long]("SOURCE_ID") ~ get[String]("NAME")
         ~ get[Option[String]]("STREET_ADDRESS") ~ get[Option[String]]("PHONE_NBR") ~ get[Option[String]]("WEBSITE_URL")
         map (flatten) *)
