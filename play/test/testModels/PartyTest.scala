@@ -97,11 +97,18 @@ class PartySpec extends PlaySpec with OneAppPerSuite with TestParty {
   "The Venues object" must {
 
     "add Venue by specifying the primary key" in {
-      Venues.addVenue(1, 1, 1, "Smalls Jazz Club", Some("NYC"), None, Some("http://smallsjazzclub.com")) mustBe Some(Venue(1, 1, 1, "Smalls Jazz Club", Some("NYC"), None, Some("http://smallsjazzclub.com")))
+      Venues.addVenue(1, 1, 1, "Smalls Jazz Club", Some("NYC"), None, None, None, Some("http://smallsjazzclub.com")) mustBe Some(Venue(1, 1, 1, "Smalls Jazz Club", Some("NYC"), None, None, None, Some("http://smallsjazzclub.com")))
     }
 
     "add Venue w/o specifying the primary key" in {
-      Venues.addVenue(1, 1, "Blue Notes", Some("some address"), Some("212-555-1212"), Some("http://bluenotesnyc.com")) match {
+      Venues.addVenue(1, 1, "Blue Notes", Some("some address"), Some(40.754581f), Some(-73.861598f), Some("212-555-1212"), Some("http://bluenotesnyc.com")) match {
+        case Some(venue) => Venues.getVenueById(venue.id) mustBe Some(venue)
+        case None => fail()
+      }
+    }
+
+    "add Venue w/o specifying the primary key and no location data" in {
+      Venues.addVenue(1, 1, "Blue Notes", Some("some address"), None, None, Some("212-555-1212"), Some("http://bluenotesnyc.com")) match {
         case Some(venue) => Venues.getVenueById(venue.id) mustBe Some(venue)
         case None => fail()
       }
@@ -109,8 +116,8 @@ class PartySpec extends PlaySpec with OneAppPerSuite with TestParty {
 
     "return all Venues via getAllVenues" in {
       val testA = toSet(Seq(
-        Venues.addVenue(1, 1, "Club 1", None, None, Some("http://club1.com")),
-        Venues.addVenue(1, 1, "Club 2", None, None, Some("http://club2.com"))))
+        Venues.addVenue(1, 1, "Club 1", None, None, None, None, Some("http://club1.com")),
+        Venues.addVenue(1, 1, "Club 2", None, Some(40.754581f), Some(-73.861598f), None, Some("http://club2.com"))))
       testA.size mustBe 2
 
       val result = Venues.getAllVenues.toSet
@@ -120,22 +127,22 @@ class PartySpec extends PlaySpec with OneAppPerSuite with TestParty {
 
     "find Venues by name via getVenuesByName" in {
       val testA = toSet(Seq(
-        Venues.addVenue(1, 1, "Club 1", None, None, Some("http://club1.com")),
-        Venues.addVenue(1, 1, "The Cotton Club", None, None, Some("http://club2.com")),
-        Venues.addVenue(1, 1, "Smalls Club of Jazz", None, None, Some("http://club3.com")),
-        Venues.addVenue(1, 1, "Smalls Club's of Jazz", None, None, Some("http://club3.com"))))
+        Venues.addVenue(1, 1, "Club 1", None, None, None, None, Some("http://club1.com")),
+        Venues.addVenue(1, 1, "The Cotton Club", None, None, None, None, Some("http://club2.com")),
+        Venues.addVenue(1, 1, "Smalls Club of Jazz", None, Some(40.754581f), Some(-73.861598f), None, Some("http://club3.com")),
+        Venues.addVenue(1, 1, "Smalls Club's of Jazz", None, Some(40.754581f), Some(-73.861598f), None, Some("http://club3.com"))))
       testA.size mustBe 4
 
       // Some non matching cases
-      Venues.addVenue(1, 1, "The Cotton Band", None, None, Some("http://club2.com"))
-      Venues.addVenue(0, 1, "The Cotton Club2", None, None, Some("http://club2.com"))
+      Venues.addVenue(1, 1, "The Cotton Band", None, None, None, None, Some("http://club2.com"))
+      Venues.addVenue(0, 1, "The Cotton Club2", None, Some(40.754581f), Some(-73.861598f), None, Some("http://club2.com"))
 
       Venues.getVenuesByName("Club").toSet mustBe testA
     }
 
     "delete a Venue via deleteVenue" in {
-      val optA = Venues.addVenue(1, 1, "Club 1", None, None, Some("http://club1.com"))
-      val testA = toSet(Seq(Venues.addVenue(1, 1, "Club 2", None, None, Some("http://club2.com"))))
+      val optA = Venues.addVenue(1, 1, "Club 1", None, Some(40.754581f), Some(-73.861598f), None, Some("http://club1.com"))
+      val testA = toSet(Seq(Venues.addVenue(1, 1, "Club 2", None, None, None, None, Some("http://club2.com"))))
       testA.size mustBe 1
 
       // delete OptA

@@ -13,6 +13,27 @@ import anorm._
 
 object AnormExtension {
 
+
+  //* This will not longer be needed in Play 2.3
+  implicit def columnToFloat: Column[Float] = Column.nonNull { (value, meta) =>
+    val MetaDataItem(qualified, nullable, clazz) = meta
+    value match {
+      case f: Float => Right(f)
+      case l: Long => Right(l.floatValue)
+      case i: Int => Right(i.toFloat)
+      case s: Short => Right(s.toFloat)
+      case b: Byte => Right(b.toFloat)
+      case _ => Left(TypeDoesNotMatch(s"Cannot convert $value: ${value.asInstanceOf[AnyRef].getClass} to Float for column $qualified"))
+    }
+  }
+
+  //* This will not longer be needed in Play 2.3
+  implicit val floatToStatement = new ToStatement[Float] {
+    def set(s: java.sql.PreparedStatement, index: Int, aValue: Float): Unit = {
+      s.setFloat(index, aValue)
+    }
+  }
+  
   // Implicit converter to DateTime
   implicit def columnToDateTime: Column[DateTime] = Column.nonNull { (value, meta) =>
     val MetaDataItem(qualified, nullable, clazz) = meta
