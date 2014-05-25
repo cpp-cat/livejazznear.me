@@ -8,7 +8,11 @@ object regex {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._;
   val copyright: String = dateP1 findFirstIn "Date of this document: 2011-07-15" match {
     case Some(dateP1(year, month, day)) => "Copyright " + year
     case None => "No copyright"
-  };System.out.println("""copyright  : String = """ + $show(copyright ));$skip(691); 
+  };System.out.println("""copyright  : String = """ + $show(copyright ));$skip(135); 
+
+  val copyright2: Option[String] = for {
+    dateP1(year, month, day) <- dateP1 findFirstIn "Last modified 2011-07-15"
+  } yield year;System.out.println("""copyright2  : Option[String] = """ + $show(copyright2 ));$skip(692); 
 
   /*
    *  possible format for input string:
@@ -22,7 +26,7 @@ object regex {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._;
   def getStartTimeDetails(str: String): (Option[Int], Option[Int], Option[Int]) = {
     val sTime = """(\d+):(\d\d) +(am|pm)""".r
     sTime findFirstIn str match {
-      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt), Some(mm toInt), Some(if(ampm == "pm") 12 else 0))
+      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt), Some(mm toInt), Some(if (ampm == "pm") 12 else 0))
       case None => (None, None, None)
     }
   };System.out.println("""getStartTimeDetails: (str: String)(Option[Int], Option[Int], Option[Int])""");$skip(50); val res$0 = 
@@ -30,12 +34,12 @@ object regex {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._;
   getStartTimeDetails("10:30 pm - 1:30 am (21)");System.out.println("""res0: (Option[Int], Option[Int], Option[Int]) = """ + $show(res$0));$skip(33); val res$1 = 
   getStartTimeDetails("1:00 am");System.out.println("""res1: (Option[Int], Option[Int], Option[Int]) = """ + $show(res$1));$skip(43); val res$2 = 
   getStartTimeDetails("2:00 pm - 3:00 pm");System.out.println("""res2: (Option[Int], Option[Int], Option[Int]) = """ + $show(res$2));$skip(42); val res$3 = 
-  getStartTimeDetails("Anything goes...");System.out.println("""res3: (Option[Int], Option[Int], Option[Int]) = """ + $show(res$3));$skip(279); 
+  getStartTimeDetails("Anything goes...");System.out.println("""res3: (Option[Int], Option[Int], Option[Int]) = """ + $show(res$3));$skip(280); 
 
   def getEndTimeDetails(str: String): Option[(Int, Int, Int)] = {
     val sTime = """- +(\d+):(\d\d) +(am|pm)""".r
     sTime findFirstIn str match {
-      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt, mm toInt, if(ampm == "pm") 12 else 0))
+      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt, mm toInt, if (ampm == "pm") 12 else 0))
       case None => None
     }
   };System.out.println("""getEndTimeDetails: (str: String)Option[(Int, Int, Int)]""");$skip(47); val res$4 = 
@@ -44,16 +48,15 @@ object regex {;import org.scalaide.worksheet.runtime.library.WorksheetSupport._;
   getEndTimeDetails("2:00 pm - 3:00 pm");System.out.println("""res6: Option[(Int, Int, Int)] = """ + $show(res$6));$skip(40); val res$7 = 
   getEndTimeDetails("Anything goes...");System.out.println("""res7: Option[(Int, Int, Int)] = """ + $show(res$7));$skip(42); 
 
-  val endDatePattern = """\((\d+)\)""".r;System.out.println("""endDatePattern  : scala.util.matching.Regex = """ + $show(endDatePattern ));$skip(139); val res$8 = 
+  val endDatePattern = """\((\d+)\)""".r;System.out.println("""endDatePattern  : scala.util.matching.Regex = """ + $show(endDatePattern ));$skip(141); val res$8 = 
   endDatePattern findFirstIn "10:30 pm - 1:30 am (21)" match {
-  	case Some(endDatePattern(dd)) => Some(dd toInt)
-  	case None => None
-  };System.out.println("""res8: Option[Int] = """ + $show(res$8));$skip(134); val res$9 = 
+    case Some(endDatePattern(dd)) => Some(dd toInt)
+    case None => None
+  };System.out.println("""res8: Option[Int] = """ + $show(res$8));$skip(136); val res$9 = 
 
   endDatePattern findFirstIn "2:00 pm - 3:00 pm" match {
-  	case Some(endDatePattern(dd)) => Some(dd toInt)
-  	case None => None
+    case Some(endDatePattern(dd)) => Some(dd toInt)
+    case None => None
   };System.out.println("""res9: Option[Int] = """ + $show(res$9))}
-
 
 }

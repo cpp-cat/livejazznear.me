@@ -65,9 +65,11 @@
 - Create unit test for crawling sample events
 - Save page sample locally to crawl for development purpose
 - Added longitude and latitude to Party corresponding to address location.
+- Implement HHJ crawler to find Events, Artists, and Venue
+- Implement an Event crawler that add Events, Artists, and Venues into database
+- Artists and Venues are mastered by exact name match (not case sensitive)
 - Use Agents with supervision to craw and insert Artist, Venue, and Event in database
 - Use google search to find official website of Artist and Venue
-- Master Artist and Venue - find duplicates
 - Master Artist and Venue - link same Artist playing in different bands
 
 

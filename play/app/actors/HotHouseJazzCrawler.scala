@@ -16,6 +16,10 @@ import models.Sources
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import scala.util.matching.Regex
+import models.Artists
+import models.Parties
+import models.Venues
+import models.Events
 
 trait WebsiteFetcher {
 
@@ -203,12 +207,52 @@ object HHJEventDetailsParser extends EventDetailsParser {
  */
 class CrawlerHelper(websiteFetcher: WebsiteFetcher, eventDetailsParser: EventDetailsParser) {
 
-  def parseArtist(eventDetails: EventDetails, source: Source): Artist = {
-    Artist(1, 1, 1, "Ella", Some("http://ellafitzerald.com"))
+  /**
+   * Create the Artist domain object in database.
+   * 
+   * If the Artist already exist by name match, return the existing one.
+   * 
+   * @TODO Find aliases based on artist name
+   * @TODO Find artist's official website via google search api
+   * @returns Some(Artist) or None if something when wrong while creating the Artist in database
+   */
+  def parseArtist(eventDetails: EventDetails, source: Source): Option[Artist] = {
+    
+    // Check if the Artist already exist by exact name match (not case sensitive)
+    val artistNameLower = eventDetails.artistName.toLowerCase()
+    val result = for {
+      artist <- Artists.getArtistsByName(eventDetails.artistName) if artistNameLower == artist.name.toLowerCase()
+    } yield artist
+    
+    // return the match found, if non found (empty list) then create in database
+    result match {
+      case List() => Artists.addArtist(Parties.ACTIVE, source.id, eventDetails.artistName, None)
+      case _ => Some(result.head)
+    }
   }
 
-  def parseVenue(eventDetails: EventDetails, source: Source): Venue = {
-    Venue(1, 1, 1, "Smalls Jazz Club", Some("NYC"), None, None, None, Some("http://smallsjazzclub.com"))
+  /**
+   * Create the Venue domain object in database
+   * 
+   * If the Venue already exist by name match, return the existing one.
+   * 
+   * @TODO Find venue's official website via google search api
+   * @TODO Add Venue phone number
+   * @returns Some(Venue) or None if something when wrong while creating the Venue in database
+   */
+  def parseVenue(eventDetails: EventDetails, source: Source): Option[Venue] = {
+    
+    // Check if the Venue already exist by exact name match (not case sensitive)
+    val venueNameLower = eventDetails.venueName.toLowerCase()
+    val result = for {
+      venue <- Venues.getVenuesByName(eventDetails.venueName) if venueNameLower == venue.name.toLowerCase()
+    } yield venue
+    
+    // return the match found, if non found (empty list) then create in database
+    result match {
+      case List() => Venues.addVenue(Parties.ACTIVE, source.id, eventDetails.venueName, eventDetails.venueAddress, eventDetails.locationLat, eventDetails.locationLng, None, None)
+      case _ => Some(result.head)
+    }
   }
 
   /**
@@ -219,36 +263,51 @@ class CrawlerHelper(websiteFetcher: WebsiteFetcher, eventDetailsParser: EventDet
   def parseEvent(website: Website, node: TagNode): Option[Event] = {
 
     // create the Source object
-    val str = eventDetailsParser.parseRemoteSiteId(node)
+    val remoteSiteId = eventDetailsParser.parseRemoteSiteId(node)
+    val websiteName = website.name
 
     try {
-      val remoteSiteId: Option[String] = if (str.length() > 0) Some(str) else {
-        Logger.error("CrawlerHelper: HTML has no remoteSiteId!!")
+      if (remoteSiteId.length() == 0) {
+        Logger.error(s"CrawlerHelper: HTML has no remoteSiteId from $websiteName!!")
         throw new NickelException("CrawlerHelper: Cannot create Source object -- HTML has no remoteSiteId!")
       }
 
       // Check if the Event already exist
-      if (Sources.getSourceByWebsiteId(website.id, remoteSiteId).isEmpty) {
+      if (Sources.getSourceByWebsiteId(website.id, Some(remoteSiteId)).isEmpty) {
 
         // Create the Source object to track the Event, Artist and Venue creation
-        val source = Sources.addSource(website.id, DateTime.now(), remoteSiteId) match {
+        val source = Sources.addSource(website.id, DateTime.now(), Some(remoteSiteId)) match {
           case Some(s) => s
           case None =>
-            Logger.error("CrawlerHelper: Cannot create Source object!")
+            Logger.error(s"CrawlerHelper: Cannot create Source object for $remoteSiteId from $websiteName!")
             throw new NickelException("CrawlerHelper: Cannot create Source object!")
         }
 
         val eventDetails = eventDetailsParser.parseEventDetails(node)
 
         // create the artist
-        val artist = parseArtist(eventDetails, source)
+        val artist = parseArtist(eventDetails, source) match {
+          case Some(a) => a
+          case None => 
+            Logger.error(s"CrawlerHelper: Cannot create/find Artist object for $remoteSiteId from $websiteName!")
+            throw new NickelException("CrawlerHelper: Cannot create Artist object!")
+        }
 
         // create the venue
-        val venue = parseVenue(eventDetails, source)
+        val venue = parseVenue(eventDetails, source) match {
+          case Some(v) => v
+          case None => 
+            Logger.error(s"CrawlerHelper: Cannot create/find Venue object for $remoteSiteId from $websiteName!")
+            throw new NickelException("CrawlerHelper: Cannot create Venue object!")
+        }
 
         // create the Event itself
-        val d = new LocalDate(2014, 5, 9)
-        Some(Event(1, 1, 1, 2, 3, d, d, Some(21 * 60), Some(21 * 60)))
+        Events.addEvent(Events.ACTIVE, source.id, artist.id, venue.id, eventDetails.startDate, eventDetails.endDate, eventDetails.startTime, eventDetails.endTime) match {
+          case Some(e) => Some(e)
+          case None =>
+            Logger.error(s"CrawlerHelper: Cannot create Event object for $remoteSiteId from $websiteName!")
+            throw new NickelException("CrawlerHelper: Cannot create Event object!")
+        }
 
       } else {
 
@@ -258,11 +317,11 @@ class CrawlerHelper(websiteFetcher: WebsiteFetcher, eventDetailsParser: EventDet
 
     } catch {
       case ne: NickelException =>
-        Logger.error(s"CrawlerHelper: Error while creating Event $str, skipping...")
+        Logger.error(s"CrawlerHelper: Error while creating Event $remoteSiteId from $websiteName, skipping...")
         None
       case e: Exception =>
         val msg = e.getMessage()
-        Logger.error(s"CrawlerHelper: Exception while creating Event $str, message: $msg, skipping...")
+        Logger.error(s"CrawlerHelper: Exception while creating Event $remoteSiteId from $websiteName, message: $msg, skipping this event...")
         None
     }
   }

@@ -10,6 +10,10 @@ object regex {
     case None => "No copyright"
   }                                               //> copyright  : String = Copyright 2011
 
+  val copyright2: Option[String] = for {
+    dateP1(year, month, day) <- dateP1 findFirstIn "Last modified 2011-07-15"
+  } yield year                                    //> copyright2  : Option[String] = Some(2011)
+
   /*
    *  possible format for input string:
    *		"10:30 pm - 1:30 am (21)" returns (Some(10*60+30+12*60), Some(60+30), Some(21))
@@ -22,7 +26,7 @@ object regex {
   def getStartTimeDetails(str: String): (Option[Int], Option[Int], Option[Int]) = {
     val sTime = """(\d+):(\d\d) +(am|pm)""".r
     sTime findFirstIn str match {
-      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt), Some(mm toInt), Some(if(ampm == "pm") 12 else 0))
+      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt), Some(mm toInt), Some(if (ampm == "pm") 12 else 0))
       case None => (None, None, None)
     }
   }                                               //> getStartTimeDetails: (str: String)(Option[Int], Option[Int], Option[Int])
@@ -36,7 +40,7 @@ object regex {
   def getEndTimeDetails(str: String): Option[(Int, Int, Int)] = {
     val sTime = """- +(\d+):(\d\d) +(am|pm)""".r
     sTime findFirstIn str match {
-      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt, mm toInt, if(ampm == "pm") 12 else 0))
+      case Some(sTime(hh, mm, ampm)) => (Some(hh toInt, mm toInt, if (ampm == "pm") 12 else 0))
       case None => None
     }
   }                                               //> getEndTimeDetails: (str: String)Option[(Int, Int, Int)]
@@ -47,14 +51,13 @@ object regex {
 
   val endDatePattern = """\((\d+)\)""".r          //> endDatePattern  : scala.util.matching.Regex = \((\d+)\)
   endDatePattern findFirstIn "10:30 pm - 1:30 am (21)" match {
-  	case Some(endDatePattern(dd)) => Some(dd toInt)
-  	case None => None
+    case Some(endDatePattern(dd)) => Some(dd toInt)
+    case None => None
   }                                               //> res8: Option[Int] = Some(21)
 
   endDatePattern findFirstIn "2:00 pm - 3:00 pm" match {
-  	case Some(endDatePattern(dd)) => Some(dd toInt)
-  	case None => None
+    case Some(endDatePattern(dd)) => Some(dd toInt)
+    case None => None
   }                                               //> res9: Option[Int] = None
-
 
 }

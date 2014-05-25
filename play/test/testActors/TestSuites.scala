@@ -7,4 +7,5 @@ import org.scalatest.Suites
 
 class TestSuite extends Suites (
   new HtmlCleanerSpec,
-  new HotHouseJazzSpec)
+  new HotHouseJazzSpec,
+  new CrawlerHelperSpec)
