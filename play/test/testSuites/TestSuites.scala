@@ -1,12 +1,10 @@
 /*
  * Copyright (c) 2014 Dufresne Management Consulting LLC.
  */
-package testModels;
+package testSuites;
 
 import org.scalatest.Suites
 
 class TestSuite extends Suites (
-  new PartySpec,
-  new EventSpec,
-  new SourceSpec,
-  new WebsiteSpec)
+  new testModels.TestSuite,
+  new testActors.TestSuite)
