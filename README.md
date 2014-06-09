@@ -35,6 +35,8 @@
 - Create a Venue profile page with user discussion and star rating
 
 ## Data Management Features
+- Use google search to find official website of Artist and Venue
+- Master Artist and Venue - link same Artist playing in different bands
 - Investigate if need Akka Circuit Breaker pattern or supervision to DB agent
 - Create a security model with a user login using email and OAuth 
 - Create a Calendar of all events.
@@ -60,7 +62,10 @@
 - Crawl web to find Artist and Venue official website
 - Master Artist, Venue and Event to avoid duplicates, link Artist playing in different bands
 
-## User Stories
+## User Stories Sprint Backlog
+- Use Agents with supervision to craw and insert Artist, Venue, and Event in database
+
+## Completed User Stories
 - Find a crawler utility (used http://htmlcleaner.sourceforge.net/index.php)
 - Create unit test for crawling sample events
 - Save page sample locally to crawl for development purpose
@@ -68,9 +73,6 @@
 - Implement HHJ crawler to find Events, Artists, and Venue
 - Implement an Event crawler that add Events, Artists, and Venues into database
 - Artists and Venues are mastered by exact name match (not case sensitive)
-- Use Agents with supervision to craw and insert Artist, Venue, and Event in database
-- Use google search to find official website of Artist and Venue
-- Master Artist and Venue - link same Artist playing in different bands
 
 
 # Sprint 1: Artist, Venue and Event Domain Model

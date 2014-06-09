@@ -10,7 +10,7 @@ CREATE TABLE PARTIES (
     STATUS TINYINT DEFAULT 1,                   
     SOURCE_ID BIGINT NOT NULL,                  
     TYPE_ID BIGINT NOT NULL,                    
-    NAME VARCHAR(255) NOT NULL,                 
+    NAME VARCHAR_IGNORECASE(255) NOT NULL,                 
     STREET_ADDRESS VARCHAR(255),                
     LOCATION_LAT REAL,
     LOCATION_LNG REAL,

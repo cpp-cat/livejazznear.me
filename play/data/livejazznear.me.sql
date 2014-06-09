@@ -24,7 +24,7 @@ CREATE TABLE PARTIES (
     SOURCE_ID BIGINT NOT NULL,                  -- Identifying where we got this info - FK to SOURCES
     TYPE_ID BIGINT NOT NULL,                    -- Party type (ARTIST, VENUE)
     --
-    NAME VARCHAR(255) NOT NULL,                 -- Party's name
+    NAME VARCHAR_IGNORECASE(255) NOT NULL,      -- Party's name, ingore case when searching
     STREET_ADDRESS VARCHAR(255),                -- Party's address, single string for now. . .
     LOCATION_LAT REAL,                          -- Party's address latitude
     LOCATION_LNG REAL,                          -- Party's address longitude
