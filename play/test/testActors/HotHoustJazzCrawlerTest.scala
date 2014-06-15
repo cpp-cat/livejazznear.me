@@ -219,7 +219,7 @@ class CrawlerHelperSpec extends PlaySpec with OneAppPerSuite {
         def fetch(website: Website): TagNode = { (new HtmlCleaner).clean(new File("data/hhj-short-test.html")) }
       }
       val crawler = new CrawlerHelper(fetcher, HHJEventDetailsParser)
-      val website = Websites.addWebsite("Hout House Jazz Tester", Websites.ACTIVE, "http://hothousejazz.com/calendar", "agentName") match {
+      val website = Websites.addWebsite("Hot House Jazz Tester", Websites.ACTIVE, "http://hothousejazz.com/calendar", "agentName") match {
         case Some(w) => w
         case None => fail()
       }

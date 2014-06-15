@@ -35,6 +35,8 @@
 - Create a Venue profile page with user discussion and star rating
 
 ## Data Management Features
+- Master Artist, Venue and Event to avoid duplicates, link Artist playing in different bands
+- Crawl web to find Artist and Venue official website
 - Use google search to find official website of Artist and Venue
 - Master Artist and Venue - link same Artist playing in different bands
 - Investigate if need Akka Circuit Breaker pattern or supervision to DB agent
@@ -55,17 +57,16 @@
 - Version: 0.1.2
 - Start Date: 5/17/2014
 - Target Date: 6/13/2014
-- Actual Date: 6/XX/2014
+- Actual Date: 6/15/2014
 
 ## Product Features:
 - Create a site crawler to fetch Events (Artist, Venue, and Event) from configured sites.
-- Crawl web to find Artist and Venue official website
-- Master Artist, Venue and Event to avoid duplicates, link Artist playing in different bands
+- Master Artist, Venue and Event to avoid duplicates (Master by Name)
 
 ## User Stories Sprint Backlog
-- Use Agents with supervision to craw and insert Artist, Venue, and Event in database
 
 ## Completed User Stories
+- Use Agent to crawl and insert Artist, Venue, and Event in database (load website page from file)
 - Find a crawler utility (used http://htmlcleaner.sourceforge.net/index.php)
 - Create unit test for crawling sample events
 - Save page sample locally to crawl for development purpose
