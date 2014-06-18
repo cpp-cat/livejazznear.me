@@ -17,6 +17,8 @@ import models.Artist
 import models.Artist
 import models.Venues
 import models.Venue
+import scala.language.postfixOps
+
 
 trait TestParty extends SuiteMixin { this: Suite =>
 

@@ -8,6 +8,9 @@ import org.scalatestplus.play._
 import org.htmlcleaner.HtmlCleaner
 import org.apache.commons.lang3.StringEscapeUtils
 import org.htmlcleaner.TagNode
+import scala.language.postfixOps
+import scala.language.reflectiveCalls
+
 
 class HtmlCleanerSpec extends PlaySpec with OneAppPerSuite {
 

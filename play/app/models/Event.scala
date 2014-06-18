@@ -12,6 +12,8 @@ import AnormExtension._
 import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
+import scala.language.postfixOps
+
 
 // -----------------------------------------------------------------------------------------------------------
 // EVENT Domain Class

@@ -17,6 +17,7 @@ import org.joda.time.DateTime
 import org.joda.time.LocalDate
 import org.joda.time.LocalTime
 import models.Event
+import scala.language.postfixOps
 
 // -----------------------------------------------------------------------------------------------------------
 // EVENT Domain Class

@@ -9,6 +9,8 @@ import play.api.db.DB
 import play.api.Play.current
 import play.api.Logger
 import AnormExtension._
+import scala.language.postfixOps
+
 
 // -----------------------------------------------------------------------------------------------------------
 // Domain Case Classes

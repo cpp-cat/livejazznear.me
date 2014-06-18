@@ -8,6 +8,8 @@ import anorm.SqlParser._
 import play.api.db.DB
 import play.api.Play.current
 import play.api.Logger
+import scala.language.postfixOps
+
 
 // -----------------------------------------------------------------------------------------------------------
 // WEBSITE Domain Class

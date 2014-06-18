@@ -27,6 +27,8 @@ import models.Source
 import models.Artist
 import models.Venue
 import models.Event
+import scala.language.postfixOps
+import scala.language.reflectiveCalls
 
 // -----------------------------------------------------------------------------------------------------------
 // HotHouseJazzSpec Class: Testing parsing HHJ site

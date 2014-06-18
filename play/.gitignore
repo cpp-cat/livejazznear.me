@@ -1,4 +1,5 @@
 logs
+project/project
 project/target
 target
 tmp
@@ -18,3 +19,4 @@ dist
 data/livejazznear.me.h2.db
 data/livejazznear.me.trace.db
 
+/activator-launch-1.2.2.jar

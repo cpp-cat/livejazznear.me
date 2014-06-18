@@ -14,6 +14,8 @@ import org.scalatest.SuiteMixin
 import org.scalatest.Suite
 import models.Website
 import models.Websites
+import scala.language.postfixOps
+
 
 // -----------------------------------------------------------------------------------------------------------
 // WEBSITE Domain Class

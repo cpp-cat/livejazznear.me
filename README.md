@@ -52,6 +52,27 @@
 - Make recommendations based on what's on nearby
 
 
+# Sprint 3: Upgrading to Play 2.3.0, Akka 2.3.3, Activator 1.2.2, Scala 2.11
+
+- Version: 0.1.3
+- Start Date: 6/15/2014
+- Target Date: 6/28/2014
+- Actual Date: 6/XX/2014
+
+## Product Features:
+- Upgrading PLay & Akka to latest version
+- Scan Websites for Event using WS with json on ajax
+
+## User Stories Sprint Backlog
+- Upgrading to latest Ractive Platform using Typesafe Activator 1.2.2
+- Upgrading project folowing migration guide (http://playframework.com/documentation/2.3.x/Migration23)
+- Removing helper AnormExtension (columnToFloat and floatToStatement) since it is now part of anorm in Play 2.3
+- Getting Events information using WebService with Play WS API (upgraded in Play 2.3)
+- Upgrading the Akka Agent to extract Events using WebService at regular intervals
+
+## Completed User Stories
+
+
 # Sprint 2: Crawling the Web for Artists, Venues and Events
 
 - Version: 0.1.2

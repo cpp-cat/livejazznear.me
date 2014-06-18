@@ -15,6 +15,8 @@ import org.scalatest.Suite
 import org.joda.time.DateTime
 import models.Source
 import models.Sources
+import scala.language.postfixOps
+
 
 // -----------------------------------------------------------------------------------------------------------
 // SOURCE Domain Class

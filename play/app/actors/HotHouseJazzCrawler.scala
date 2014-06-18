@@ -20,6 +20,7 @@ import models.Artists
 import models.Parties
 import models.Venues
 import models.Events
+import scala.language.postfixOps
 
 trait WebsiteFetcher {
 
