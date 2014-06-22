@@ -11,6 +11,8 @@ libraryDependencies ++= Seq(
   anorm,
   cache,
   ws,
+  "com.typesafe.slick" %% "slick" % "2.0.2",
+  "org.slf4j" % "slf4j-nop" % "1.6.4",
   "com.typesafe.akka" %% "akka-actor" % "2.3.3",
   "joda-time" % "joda-time" % "2.3",
   "net.sourceforge.htmlcleaner" % "htmlcleaner" % "2.8",

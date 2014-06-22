@@ -18,5 +18,5 @@ dist
 /.cache
 data/livejazznear.me.h2.db
 data/livejazznear.me.trace.db
-
 /activator-launch-1.2.2.jar
+/.worksheet
