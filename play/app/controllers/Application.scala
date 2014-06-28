@@ -163,4 +163,23 @@ object Application extends Controller {
         Ok(s6)
     }
   }
+
+  // Simple example of Apache Spark application
+  // see http://spark.apache.org/docs/latest/quick-start.html#a-standalone-app-in-scala
+  def spark = Action {
+    import org.apache.spark.SparkContext
+    import org.apache.spark.SparkContext._
+    import org.apache.spark.SparkConf
+
+    val logFile = "conf/application.conf"
+    val conf = new SparkConf()
+      .setMaster("local")
+      .setAppName("Simple Spark Action")
+    val sc = new SparkContext(conf)
+    val logData = sc.textFile(logFile, 2).cache()
+    val numAs = logData.filter(line => line.contains("a")).count()
+    val numBs = logData.filter(line => line.contains("b")).count()
+
+    Ok(s"Lines with a: $numAs, Lines with b: $numBs")
+  }
 }

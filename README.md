@@ -52,6 +52,28 @@
 - Make recommendations based on what's on nearby
 
 
+# Sprint 4: Adding Spark 1.0.0
+
+- Version: 0.1.4
+- Start Date: 6/21/2014
+- Target Date: 6/28/2014
+- Actual Date: 6/28/2014
+
+## Product Features:
+- Adding Spark with a simple test
+
+## User Stories Sprint Backlog
+
+## Completed User Stories
+- Spark 1.0.0 uses Akka 2.2.3 with is compatible with Play 2.2.1. See the sample project in
+  Play 2.2.1 workspace.
+- Forked Spark 1.1.0-SNAPSHOT to upgrade Akka to Akka 2.3.3 and protobuf to version 2.5.0
+  (see https://groups.google.com/forum/#!topic/akka-user/cI4CEKEJvfs)
+- Installed Maven locally to build Spark into local repository, added local repository
+  to build.sbt of this project.
+- Added simple route /spark to test spark. Does not work properly, Spark needs more work
+  in order to upgrade Akka.
+
 # Sprint 3: Upgrading to Play 2.3.0, Akka 2.3.3, Activator 1.2.2, Scala 2.10.4
 
 - Version: 0.1.3
