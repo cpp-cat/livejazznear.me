@@ -21,6 +21,7 @@ libraryDependencies ++= Seq(
   "org.eclipse.jetty.orbit" % "javax.transaction" % "1.1.1.v201105210645",
   "org.eclipse.jetty.orbit" % "javax.servlet" % "3.0.0.v201112011016",
   "org.eclipse.jetty.orbit" % "javax.mail.glassfish" % "1.4.1.v201005082020",
+  "com.google.protobuf" % "protobuf-java" % "2.5.0",
   "org.scalatest" %% "scalatest" % "2.1.7" % "test",
   "org.scalatestplus" %% "play" % "1.1.0" % "test",
   "org.mockito" % "mockito-core" % "1.9.5" % "test",
